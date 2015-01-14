@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Django Theming by achavezu89</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Django Theming</h1>
+        <h2>Django application, implement theming concept, flexible and configurable. Allow theming for host url.</h2>
+        <a href="https://github.com/achavezu89/django-theming" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="django-theming" class="anchor" href="#django-theming" aria-hidden="true"><span class="octicon octicon-link"></span></a>Django Theming</h1>
+
+<p><a href="https://pypi.python.org/pypi/django-theming"><img src="https://pypip.in/v/django-theming/badge.svg?text=version&amp;style=flat" alt="PIP VERSION"></a>
+<a href="https://pypi.python.org/pypi/django-theming"><img src="https://pypip.in/d/django-theming/badge.svg?style=flat" alt="PIP DOWNLOADS"></a>
+<a href="https://pypi.python.org/pypi/django-theming"><img src="https://pypip.in/py_versions/django-theming/badge.svg?style=flat" alt="PIP PYVERSIONS"></a>
+<a href="https://pypi.python.org/pypi/django-theming"><img src="https://pypip.in/status/django-theming/badge.svg?style=flat" alt="PIP STATUS"></a>
+<a href="https://pypi.python.org/pypi/django-theming"><img src="https://pypip.in/license/django-theming/badge.svg?style=flat" alt="PIP LICENSE"></a></p>
+
+<p>Django application, implement theming concept, flexible and configurable. Allow theming for host url.</p>
+
+<h3>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h3>
+
+<p>You can install the most recent <strong>Django Theming</strong> version using pip:</p>
+
+<pre><code>pip install django-theming
+</code></pre>
+
+<h3>
+<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h3>
+
+<p><strong>NOTE</strong>: The following settings should be added to the project file <code>settings.py</code>.</p>
+
+<ol>
+<li>
+<p>Add 'theming' to <code>INSTALLED_APPS</code>:</p>
+
+<pre><code>INSTALLED_APPS += ( 'theming', )
+</code></pre>
+</li>
+<li>
+<p>Add 'theming.middleware.ThemingMiddleware' to <code>MIDDLEWARE_CLASSES</code>:</p>
+
+<pre><code>MIDDLEWARE_CLASSES += ( 'theming.middleware.ThemingMiddleware', )
+</code></pre>
+</li>
+<li>
+<p>Add 'theming.loaders.ThemeLoader' to <code>TEMPLATE_LOADERS</code>:</p>
+
+<pre><code>TEMPLATE_LOADERS += ( 'theming.loaders.ThemeLoader', )
+</code></pre>
+</li>
+<li>
+<p>Declare <code>THEME_ROOT</code> and <code>MEDIA_ROOT</code>:</p>
+
+<pre><code>BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+THEME_ROOT = os.path.join(BASE_DIR, 'themes')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+</code></pre>
+</li>
+<li>
+<p>Declare <code>MEDIA_URL</code>:</p>
+
+<pre><code>MEDIA_URL = '/media/'
+</code></pre>
+</li>
+<li>
+<p>Declare <code>THEME_MEDIA_ROOT</code> y <code>THEME_MEDIA_URL</code>:</p>
+
+<pre><code>THEME_MEDIA_ROOT = os.path.join(MEDIA_ROOT, 'themes')
+THEME_MEDIA_URL = os.path.join(MEDIA_URL, 'themes')
+</code></pre>
+</li>
+<li>
+<p>Declare host/theme config tuple <code>THEME_CONFIG</code>:</p>
+
+<pre><code>THEME_CONFIG = (
+    (r'^(.+\.)?dominio\.pe', 'default'),
+    (r'^(.+\.)?test\.pe', 'test'),
+)
+</code></pre>
+</li>
+</ol>
+
+<h3>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h3>
+
+<p>It should create a folder <code>themes</code> at the project with the following structure:</p>
+
+<pre><code>project_django/
+| -- themes/
+     | -- default/  ** theme name
+          | -- templates/
+          | -- media/
+          |   | -- styles/
+          |   | -- scripts/
+          |   | -- images/
+          | -- metadata.json
+</code></pre>
+
+<p><strong>NOTE</strong>: We use <code>media</code> instead of <code>static</code> for independent assets by theme.</p>
+
+<p>In the file <code>metadata.json</code> it should include information on the theme:</p>
+
+<pre><code>{
+    "slug": "default",
+    "name": "Default",
+    "description": "Theme Default"
+    "author": "Author",
+    "version": "1.0"
+}
+</code></pre>
+
+<p>You can use the template tag <code>theme</code> to refer to the theme assets as follows:</p>
+
+<pre><code>&lt;link rel="stylesheet" href="{% theme 'styles/main.css' %}" /&gt;
+</code></pre>
+
+<p><strong>NOTE</strong>: The tamplate tag <code>theme</code> will refer to the <code>media/themes/&lt;theme_name&gt;</code> folder, if not find the file in that path, it will search in <code>static/</code></p>
+
+<p>You can use the command <code>collectthemes</code> to copy all assets of the theme to the location  <code>media/</code>:</p>
+
+<pre><code>python manage.py collectthemes
+
+options:
+- l, --link : Create a symbolic link to each file instead of copying.
+- f, --force: Force to overwrite content.
+</code></pre>
+
+<h3>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h3>
+
+<p>Development of <strong>django-theming</strong> happens at github: <a href="https://github.com/achavezu89/django-theming">https://github.com/achavezu89/django-theming</a></p>
+
+<h3>
+<a id="credits" class="anchor" href="#credits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Credits</h3>
+
+<ul>
+<li><a href="https://github.com/achavezu89">Andres Chavez</a></li>
+<li><a href="https://github.com/ppold">Giorgio Leveroni</a></li>
+<li><a href="https://github.com/gnrfan">Antonio Ognio</a></li>
+<li><a href="https://github.com/akobashikawa">Antonio Kobashikawa</a></li>
+</ul>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/achavezu89/django-theming/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/achavezu89/django-theming/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/achavezu89/django-theming"></a> is maintained by <a href="https://github.com/achavezu89">achavezu89</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
