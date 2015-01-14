@@ -1,10 +1,10 @@
 Django Theming
 **************
 
-.. image:: https://pypip.in/version/django-theming/badge.svg?text=version&style=flat
+.. image:: https://pypip.in/v/django-theming/badge.svg?text=version&style=flat
     :target: https://pypi.python.org/pypi/django-theming
 
-.. image:: https://pypip.in/download/django-theming/badge.svg?style=flat
+.. image:: https://pypip.in/d/django-theming/badge.svg?style=flat
     :target: https://pypi.python.org/pypi/django-theming
 
 .. image:: https://pypip.in/py_versions/django-theming/badge.svg?style=flat
