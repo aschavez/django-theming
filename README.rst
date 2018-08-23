@@ -1,19 +1,19 @@
 Django Theming
 **************
 
-.. image:: https://pypip.in/v/django-theming/badge.svg?text=version&style=flat
+.. image:: https://img.shields.io/pypi/v/django-theming.svg?label=version&style=flat
     :target: https://pypi.python.org/pypi/django-theming
 
-.. image:: https://pypip.in/d/django-theming/badge.svg?style=flat
+.. image:: https://img.shields.io/pypi/dm/django-theming.svg?style=flat
     :target: https://pypi.python.org/pypi/django-theming
 
-.. image:: https://pypip.in/py_versions/django-theming/badge.svg?style=flat
+.. image:: https://img.shields.io/pypi/pyversions/django-theming.svg?style=flat
     :target: https://pypi.python.org/pypi/django-theming
 
-.. image:: https://pypip.in/status/django-theming/badge.svg?style=flat
+.. image:: https://img.shields.io/pypi/status/django-theming.svg?style=flat
     :target: https://pypi.python.org/pypi/django-theming
     
-.. image:: https://pypip.in/license/django-theming/badge.svg?style=flat
+.. image:: https://img.shields.io/pypi/l/django-theming.svg?style=flat
     :target: https://pypi.python.org/pypi/django-theming
 
 Django application, implement theming concept, flexible and configurable. Allow theming for host url.
